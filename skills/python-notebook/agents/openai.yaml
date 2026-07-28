@@ -1,0 +1,3 @@
+interface:
+  display_name: "ArcGIS API for Python"
+  short_description: "Write ArcGIS API for Python in Notebooks or local envs, safely"

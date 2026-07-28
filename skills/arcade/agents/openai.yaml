@@ -1,0 +1,3 @@
+interface:
+  display_name: "Arcade"
+  short_description: "Author profile-scoped, version-gated ArcGIS Arcade expressions"

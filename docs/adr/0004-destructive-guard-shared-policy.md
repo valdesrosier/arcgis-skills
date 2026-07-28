@@ -1,0 +1,5 @@
+# Destructive-operation guard is shared policy, pulled by parents as an explicit step
+
+**Status:** Superseded by [ADR-0005](0005-inline-destructive-guard-per-skill.md) — the guard is now inlined per skill for clean CLI distribution.
+
+The guard against irreversible ArcGIS data operations is written once as shared policy in `.agents/skills/_shared/destructive-operations.md` and invoked by name from `python-notebook` and `js-sdk` as an explicit step — deliberately **not** a self-firing model-invoked skill, because a safety check must engage deterministically, precisely when the agent is moving fast and sounds confident, which is exactly when description-match invocation is least reliable. The shared file holds only the policy (name the target, show what it is, confirm non-production, prefer a dry-run, never emit blind); each calling skill supplies its own API surface and enforcement shape. Scope is held to irreversible data operations so the guard does not accrete credential-handling or org-hygiene sediment.

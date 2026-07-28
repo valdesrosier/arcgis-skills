@@ -1,0 +1,9 @@
+# Local materialized skills — NOT published.
+# This folder holds the local working mirror of this repo's skills AND
+# Matt Pocock's skills (installed as a dev dependency via `npx skills add`).
+# The published, installable skills live in the top-level `skills/` directory.
+# Regenerate this mirror locally by copying from `skills/`, or re-run the skills CLI.
+.agents/skills/
+
+# Node
+node_modules/

@@ -1,0 +1,3 @@
+# arcgis-docs-lookup owns ArcGIS source authority and escalates to research
+
+Rather than fork the shared `research` skill or re-implement its background-agent machinery, `arcgis-docs-lookup` is a standalone model-invoked skill that owns the ArcGIS source-selection rules: route to developers.arcgis.com for API references, pro.arcgis.com for Pro, enterprise.arcgis.com for Enterprise/Notebook Server; never cite ArcMap, ArcCatalog, or ArcGIS Desktop documentation; version-scope every Enterprise URL; treat Esri Community threads as hypotheses to verify, not sources. It handles lightweight "does this API exist at the pinned version" checks inline and escalates to `research` for genuine investigations. `js-sdk` and `arcade` point at it instead of restating the rules.

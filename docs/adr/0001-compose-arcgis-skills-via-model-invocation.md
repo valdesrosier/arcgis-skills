@@ -1,0 +1,3 @@
+# Compose ArcGIS skills via model-invocation; do not fork Matt Pocock's skills
+
+Matt Pocock's skills are installed as `npx skills` lockfile-tracked files (`skills-lock.json` records a `computedHash` per skill), so editing them in place would fight the updater and drop us off upstream fixes. We therefore add ArcGIS knowledge as *new* model-invoked skills that fire on description match during a grill, leaving his files pristine — rather than forking `grill-with-docs` or any other upstream file. Named `/grill-*` sibling orchestrators (files we own, sitting beside his) may be added later where a typed shortcut earns its keep; this is the "C now, B later" phasing.

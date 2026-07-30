@@ -5,11 +5,12 @@ description: Look up ArcGIS documentation against authoritative Esri sources and
 
 # ArcGIS Docs Lookup
 
-Answer every ArcGIS question from the first-party source that *owns* it — never a stale mirror, a wrong-product page, or an unverified forum post.
+Answer every ArcGIS question from the first-party source that _owns_ it — never a stale mirror, a wrong-product page, or an unverified forum post.
 
 ## Route to the owning source
 
 - **developers.arcgis.com** — ArcGIS Maps SDK for JavaScript, ArcGIS API for Python, the REST API, and Arcade references.
+- **developers.arcgis.com/enterprise-sdk** — the ArcGIS Enterprise SDK, including Custom Data Feeds (CDF) provider development. A distinct product area from the developer references above — route CDF and Enterprise SDK questions here.
 - **pro.arcgis.com** — ArcGIS Pro, including ArcPy and geoprocessing.
 - **enterprise.arcgis.com** — ArcGIS Enterprise, Portal, and Notebook Server administration and runtime docs.
 

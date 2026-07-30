@@ -1,20 +1,21 @@
 # ArcGIS Skills
 
-A set of [agent skills](https://github.com/mattpocock/skills) that give an AI coding assistant (GitHub Copilot, Claude, and other skill-aware agents) real, current expertise in the Esri / ArcGIS developer stack — **Experience Builder**, the **ArcGIS Maps SDK for JavaScript**, **Arcade**, the **ArcGIS API for Python & Notebooks**, and authoritative **docs lookup**.
+A set of [agent skills](https://github.com/mattpocock/skills) that give an AI coding assistant (GitHub Copilot, Claude, and other skill-aware agents) real, current expertise across the Esri / ArcGIS developer stack — client and authoring surfaces like **Experience Builder**, the **ArcGIS Maps SDK for JavaScript**, **Arcade**, and the **ArcGIS API for Python & Notebooks**; server-side **Custom Data Feeds** provider development; and authoritative **docs lookup**.
 
 They are designed to **compose with [Matt Pocock's skills](https://github.com/mattpocock/skills)** — see [Recommended: pair with Matt Pocock's skills](#recommended-pair-with-matt-pococks-skills) — but every skill here works fully standalone with none of his installed.
 
 ## The skills
 
-| Skill                  | What it does                                                                                                                                                                                                             |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **arcgis-docs-lookup** | Routes documentation questions to the authoritative Esri source (developers / pro / enterprise), never ArcMap or Desktop, version-scoping every Enterprise URL. Escalates to a `research` skill for deep investigations. |
-| **arcade**             | Authors Arcade expressions for the correct **profile** (popup, labeling, field calculation, attribute rules) and verifies every global and function exists at the target Arcade version.                                 |
-| **js-sdk**             | Builds and migrates apps with the ArcGIS Maps SDK for JavaScript — resolves the target version, knows the 3.x / 4.x / 5.x generation boundaries, avoids the dead AMD path, and pins Calcite.                             |
-| **python-notebook**    | Writes ArcGIS API for Python for hosted ArcGIS Notebooks (Standard vs Advanced runtimes) or local installs, with a hard guard around destructive data operations.                                                        |
-| **exb-widget**         | Builds Experience Builder Developer Edition custom widgets at the correct **compile version**, checks the Node/pnpm gate, and holds the manifest invariants.                                                             |
+| Skill                        | What it does                                                                                                                                                                                                                                                     |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **arcgis-docs-lookup**       | Routes documentation questions to the authoritative Esri source (developers / pro / enterprise), never ArcMap or Desktop, version-scoping every Enterprise URL. Escalates to a `research` skill for deep investigations.                                         |
+| **arcade**                   | Authors Arcade expressions for the correct **profile** (popup, labeling, field calculation, attribute rules) and verifies every global and function exists at the target Arcade version.                                                                         |
+| **js-sdk**                   | Builds and migrates apps with the ArcGIS Maps SDK for JavaScript — resolves the target version, knows the 3.x / 4.x / 5.x generation boundaries, avoids the dead AMD path, and pins Calcite.                                                                     |
+| **python-notebook**          | Writes ArcGIS API for Python for hosted ArcGIS Notebooks (Standard vs Advanced runtimes) or local installs, with a hard guard around destructive data operations.                                                                                                |
+| **exb-widget**               | Builds Experience Builder Developer Edition custom widgets at the correct **compile version**, checks the Node/pnpm gate, and holds the manifest invariants.                                                                                                     |
+| **arcgis-custom-data-feeds** | Builds ArcGIS Enterprise **Custom Data Feeds** — Node.js/Koop providers that expose an external system as a Feature Service — pinned to the target Enterprise version and its 12.0 generation boundary, with a guard around editable providers' upstream writes. |
 
-Both `python-notebook` and `js-sdk` embed a destructive-operation guard: before any irreversible data call, the agent must name the target, show what it is, confirm it isn't production, and prefer a dry-run — so each skill stays self-contained.
+`python-notebook`, `js-sdk`, and `arcgis-custom-data-feeds` each embed a destructive-operation guard: before any irreversible data call — a hosted-feature delete, or a Custom Data Feeds provider's upstream update/delete — the agent must name the target, show what it is, confirm it isn't production, and prefer a dry-run — so each skill stays self-contained.
 
 ## How they work — you don't invoke them
 
@@ -57,8 +58,8 @@ Nothing here edits or depends on his files — the composition is additive.
 
 ## Design principles
 
-- **No baked version facts.** Version relationships change (the Experience Builder build command and output path changed at 1.17). Skills encode the _procedure_ for discovering the current version and point at the live [Esri version matrix](https://developers.arcgis.com/javascript/latest/version-matrix/) rather than hardcoding a value that will silently go stale.
-- **A safety guard for destructive data operations.** Before any `truncate` / `delete` / `overwrite` / feature deletion, the agent must name the target, show what it is, confirm it isn't production, and prefer a dry-run — pulled deterministically as an explicit step, never left to chance.
+- **No baked version facts.** Version relationships change (the Experience Builder build command and output path changed at 1.17). Skills encode the _procedure_ for discovering the current version and point at the live version anchor that owns their stack — the [Esri version matrix](https://developers.arcgis.com/javascript/latest/version-matrix/) for the JS-family skills, the [Enterprise SDK CDF guide](https://developers.arcgis.com/enterprise-sdk/guide/custom-data-feeds/) for Custom Data Feeds — rather than hardcoding a value that will silently go stale.
+- **A safety guard for destructive data operations.** Before any irreversible data operation — a `truncate` / `delete` / `overwrite` / feature deletion against hosted data, or an editable Custom Data Feeds provider's upstream update/delete — the agent must name the target, show what it is, confirm it isn't production, and prefer a dry-run — pulled deterministically as an explicit step, never left to chance.
 - **Never cite retired products.** Documentation lookups route to current sources and explicitly avoid ArcMap, ArcCatalog, and ArcGIS Desktop docs.
 
 The architectural decisions behind these choices are recorded in [`docs/adr/`](docs/adr/), and project terminology in [`CONTEXT.md`](CONTEXT.md).
@@ -71,7 +72,7 @@ Every skill is portable — drop a single folder into any skill-aware repo and i
 
 Skills are published under a top-level [`skills/`](skills/) directory — the [skills.sh](https://skills.sh) source layout that `npx skills add` reads — and this is the only copy committed to the repo. For local development they're also mirrored under `.agents/skills/`, which is **git-ignored**: that folder additionally holds Matt Pocock's skills (installed as a dev dependency), and neither his skills nor the mirror are redistributed here. Regenerate the mirror by copying from `skills/`.
 
-Each skill is self-contained: the destructive-operation guard is inlined into `js-sdk` and `python-notebook` rather than shared, so nothing is lost when the CLI copies a single skill folder.
+Each skill is self-contained: the destructive-operation guard is inlined into `js-sdk`, `python-notebook`, and `arcgis-custom-data-feeds` rather than shared, so nothing is lost when the CLI copies a single skill folder.
 
 ## License
 

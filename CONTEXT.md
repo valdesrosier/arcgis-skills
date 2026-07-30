@@ -4,10 +4,14 @@ Terminology specific to this repo's ArcGIS skill set, layered on top of Matt Poc
 
 ## Language
 
-**Shared version anchor**:
-The live Esri version-matrix URL that maps an ArcGIS Enterprise release to its ArcGIS Maps SDK for JavaScript, Calcite, and Arcade versions. The single source of truth every version-needing skill points at rather than restating.
-_Avoid_: version table, version map, version matrix (when referring to the canonical live source)
+**Version anchor**:
+The live Esri source that owns a given stack's version relationships, which every version-needing skill points at rather than restating. The anchor is per-stack, not one global source: the ArcGIS Maps SDK for JavaScript version-matrix is the anchor shared by the JS-family skills (arcade, js-sdk, exb-widget) — mapping an ArcGIS Enterprise release to its JS SDK, Calcite, and Arcade versions — while Custom Data Feeds points at the ArcGIS Enterprise SDK CDF guide, a separate release train.
+_Avoid_: version table, version map, version matrix (when referring to a canonical live source); "shared version anchor" (implies one global anchor — it is per-stack)
 
 **Destructive operation guard**:
-The policy each data-touching skill embeds and must satisfy before emitting code that irreversibly changes ArcGIS data — name the target, show what it is, confirm it is not production, prefer a dry-run, never emit blind. Scoped to data operations only, not credentials or org hygiene.
+The policy each data-touching skill embeds and must satisfy before emitting code that irreversibly changes real data — whether ArcGIS-hosted data or a Custom Data Feeds provider's upstream store — name the target, show what it is, confirm it is not production, prefer a dry-run, never emit blind. Scoped to data operations only, not credentials or org hygiene.
 _Avoid_: safety check, confirmation prompt (when referring to this specific policy)
+
+**Custom Data Feed (CDF)**:
+A Node.js provider — running on Koop.js inside the ArcGIS Enterprise SDK runtime — that pulls from an external source and exposes it as an ArcGIS Feature Service. Server-side extension development, distinct from the client/authoring surfaces the other skills cover. The provider's own backend (a database, an external API) is its _upstream store_; deployment/registration on ArcGIS Server is out of scope for the skill.
+_Avoid_: connector, integration, data pipeline (those are the Python-side ETL sense, not the CDF provider)

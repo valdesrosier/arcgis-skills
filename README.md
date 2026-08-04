@@ -34,7 +34,7 @@ Each skill's one-line description stays in the agent's context; when your intent
 **Via the `skills` CLI** — installs into your project's `.agents/skills/`:
 
 ```bash
-npx skills@latest add apfister/arcgis-skills
+npx skills@latest add valdesrosier/arcgis-skills
 ```
 
 **Or copy the folders** — copy the skill folder(s) you want from [`skills/`](skills/) into your project's `.agents/skills/` directory. Every skill is self-contained; `arcade` and `js-sdk` verify APIs through `arcgis-docs-lookup`, so include it if you want that step.

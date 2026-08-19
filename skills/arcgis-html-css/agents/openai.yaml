@@ -1,0 +1,3 @@
+interface:
+  display_name: "ArcGIS HTML and CSS"
+  short_description: "Write compatible Hub text-card and Map Viewer popup fragments"

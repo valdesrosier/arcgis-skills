@@ -1,0 +1,3 @@
+# Source and label constrained-markup compatibility rules
+
+ArcGIS Online's Hub text card and Map Viewer popup editors sanitize different subsets of HTML and CSS, and some renderer behavior may be discoverable only by saving content in the live editor. The `arcgis-html-css` skill therefore treats first-party Esri documentation as authoritative and may supplement a documentation gap with a dated, explicitly labeled observation that records the tested surface, input, and persisted result. Unsupported or unverified constructs receive a conservative replacement. This trades a little reference maintenance and less absolute language for practical coverage without presenting transient ArcGIS Online behavior as a stable Esri contract.

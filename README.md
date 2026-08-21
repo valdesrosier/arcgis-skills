@@ -42,6 +42,22 @@ npx skills@latest add valdesrosier/arcgis-skills
 
 Either way, any skill-aware agent (GitHub Copilot, Claude, Codex) picks them up automatically whenever the workspace is open — no per-chat setup.
 
+## Keeping skills up to date
+
+Updates are **pull-based** — there's no background auto-update. The skill files live committed in your project, so refreshing them is a deliberate, reviewable step.
+
+**If you installed via the CLI**, re-run the same command from your project root:
+
+```bash
+npx skills@latest add valdesrosier/arcgis-skills
+```
+
+`add` is idempotent and doubles as the updater: it re-fetches the current version, rewrites the files under `.agents/skills/`, and refreshes the per-skill hashes in `skills-lock.json`. Review the diff and commit it like any other dependency bump — the changed hashes tell you exactly which skills moved.
+
+**If you copied the folders by hand**, re-copy the skill folder(s) from [`skills/`](skills/) (or `git pull` if you vendored this repo).
+
+There's no separate `update` subcommand — re-running `add` is the update path. Tie it to a trigger rather than checking at random: re-run when a new [release](https://github.com/valdesrosier/arcgis-skills/releases) is tagged, or fold it into your routine dependency hygiene.
+
 ## Recommended: pair with Matt Pocock's skills
 
 These were built to slot into [Matt Pocock's skill system](https://github.com/mattpocock/skills) and follow its conventions (front-loaded descriptions, one trigger per branch, checkable completion criteria, progressive disclosure). Two ways they benefit from his set:
